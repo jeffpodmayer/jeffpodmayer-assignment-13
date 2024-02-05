@@ -3,12 +3,23 @@ package com.coderscampus.a13.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "accounts")
 public class Account {
 	private Long accountId;
 	private String accountName;
 	
 	private List<User> users = new ArrayList<>();
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Long getAccountId() {
 		return accountId;
 	}
@@ -24,7 +35,8 @@ public class Account {
 	public void setAccountName(String accountName) {
 		this.accountName = accountName;
 	}
-
+	
+	@ManyToMany(mappedBy = "accounts")
 	public List<User> getUsers() {
 		return users;
 	}
