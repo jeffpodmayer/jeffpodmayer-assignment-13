@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.coderscampus.a13.domain.Address;
@@ -40,5 +41,15 @@ public class UserController {
 		user.setAddress(address);
 		userService.saveUser(user);
 		return "redirect:/users";
+	}
+	
+	//Mapping for /USERID hyperlink START HERE!!!!
+	@GetMapping("/users/{userId}")
+	public String getOneUser(ModelMap model, @PathVariable Long userId) {
+		User user = userService.findById(userId);
+		Address address = user.getAddress();
+		model.put("user", user);
+		model.put("address", address);
+		return "update";
 	}
 }

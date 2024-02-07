@@ -1,6 +1,7 @@
 package com.coderscampus.a13.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class UserService {
 	public Address saveAddress(Address address) {
 		return addressRepo.save(address);
 		
+	}
+
+	public User findById(Long userId) {
+		Optional<User> userOpt = userRepo.findById(userId);
+		return userOpt.orElse(new User());
 	}
 
 }
