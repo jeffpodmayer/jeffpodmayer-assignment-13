@@ -53,10 +53,11 @@ public class UserController {
 		return "update";
 	}
 	
-	@PostMapping("/users/{userId}")//NEED TO ADD A SAVE ADDRESS METHOD
-	public String updateUser(User user) {
+	@PostMapping("/users/{userId}")
+	public String updateUser(User user, Address address) {
+		user.setAddress(address);
 		userService.saveUser(user);
-		return "redirect:/users{userId}";
+		return "redirect:/users/" + user.getUserId();
 	}
 	
 	@PostMapping("/users/{userId}/delete")
@@ -64,7 +65,4 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	
-	//TO-DO
-	//Add save address method to updateUser
 }
