@@ -43,7 +43,7 @@ public class UserController {
 		return "redirect:/users";
 	}
 	
-	//Mapping for /USERID hyperlink START HERE!!!!
+	//Mapping for /USERID 
 	@GetMapping("/users/{userId}")
 	public String getOneUser(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
@@ -52,4 +52,19 @@ public class UserController {
 		model.put("address", address);
 		return "update";
 	}
+	
+	@PostMapping("/users/{userId}")//NEED TO ADD A SAVE ADDRESS METHOD
+	public String updateUser(User user) {
+		userService.saveUser(user);
+		return "redirect:/users{userId}";
+	}
+	
+	@PostMapping("/users/{userId}/delete")
+	public String deleteOneUser(@PathVariable Long userId) {
+		userService.delete(userId);
+		return "redirect:/users";
+	}
+	
+	//TO-DO
+	//Add save address method to updateUser
 }

@@ -16,27 +16,32 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepo;
-	
-	@Autowired 
+
+	@Autowired
 	private AddressRepository addressRepo;
-	
-	public List<User> findAll(){
+
+	public List<User> findAll() {
 		return userRepo.findAll();
 	}
 
 	public User saveUser(User user) {
 		return userRepo.save(user);
-		
+
 	}
 
 	public Address saveAddress(Address address) {
 		return addressRepo.save(address);
-		
+
 	}
 
 	public User findById(Long userId) {
 		Optional<User> userOpt = userRepo.findById(userId);
 		return userOpt.orElse(new User());
+	}
+
+	public void delete(Long userId) {
+		userRepo.deleteById(userId);
+
 	}
 
 }
