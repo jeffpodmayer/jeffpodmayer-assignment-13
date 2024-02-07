@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import com.coderscampus.a13.domain.Address;
 import com.coderscampus.a13.domain.User;
 import com.coderscampus.a13.service.UserService;
 
@@ -29,12 +30,14 @@ public class UserController {
 	@GetMapping("/register")
 	public String getCreateUser(ModelMap model) {
 		model.put("user", new User());
+		model.put("address", new Address());
 		return "register";
 	}
 	
 	@PostMapping("/register")
-	public String postCreateUser(User user) {
+	public String postCreateUser(User user, Address address) {
 		userService.saveUser(user);
+		userService.saveAddress(address);
 		return "redirect:/users";
 	}
 }
