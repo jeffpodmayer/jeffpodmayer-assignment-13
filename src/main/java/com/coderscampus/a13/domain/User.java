@@ -3,6 +3,7 @@ package com.coderscampus.a13.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -69,7 +70,7 @@ public class User {
 		this.accounts = accounts;
 	}
 
-	@OneToOne(mappedBy = "user")
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	public Address getAddress() {
 		return address;
 	}
