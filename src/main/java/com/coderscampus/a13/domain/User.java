@@ -5,6 +5,7 @@ import java.util.List;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -58,7 +59,7 @@ public class User {
 		this.userId = userId;
 	}
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "user_account", 
 			   joinColumns = @JoinColumn(name = "user_id"), 
 			   inverseJoinColumns = @JoinColumn(name = "account_id"))

@@ -3,7 +3,9 @@ package com.coderscampus.a13.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -36,7 +38,7 @@ public class Account {
 		this.accountName = accountName;
 	}
 	
-	@ManyToMany(mappedBy = "accounts")
+	@ManyToMany(mappedBy = "accounts", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	public List<User> getUsers() {
 		return users;
 	}
