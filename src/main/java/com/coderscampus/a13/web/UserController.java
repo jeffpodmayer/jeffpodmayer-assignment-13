@@ -74,11 +74,11 @@ public class UserController {
 	}
 
 	// Mapping for /ACCOUNT
-	@GetMapping("/users/{userId}/accounts/create-account")
+	@GetMapping("/users/{userId}/accounts/{accountId}")
 	public String createAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
 		User user = userService.findById(userId);
 		Account account = new Account();
-		
+		accountId = accountService.findById(accountId);
 		model.put("user", user);
 		model.put("account", account);
 		return "accounts";
