@@ -20,7 +20,7 @@ public class UserController {
 
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AccountService accountService;
 
@@ -72,15 +72,23 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-
-	// Mapping for /ACCOUNT
-	@GetMapping("/users/{userId}/accounts/{accountId}")
-	public String createAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
-		User user = userService.findById(userId);
+	// UPON CLICKING CREATE NEW BANK ACCOUNT
+	@PostMapping("/users/{userId}/accounts")
+	public String createAccount(@PathVariable Long userId) {
 		Account account = new Account();
-		accountId = accountService.findById(accountId);
-		model.put("user", user);
-		model.put("account", account);
-		return "accounts";
+		accountService.saveAccount(account);
+		Long accountId = account.getAccountId();
+		return "redirect:/users/" + userId + "/accounts/" + accountId;
 	}
+
+//	// Mapping for /ACCOUNT
+//	@GetMapping("/users/{userId}/accounts/{accountId}")
+//	public String createAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
+//		User user = userService.findById(userId);
+//		Account account = new Account();
+//		accountId = accountService.findById(accountId);
+//		model.put("user", user);
+//		model.put("account", account);
+//		return "accounts";
+//	}
 }

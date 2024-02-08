@@ -53,10 +53,11 @@
 
 	<h1>Accounts</h1>
 
-	<div th:if="${account != null}">
-		<a th:action="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}" method="post">
-			<button type="button">Create New Bank Account</button>
-		</a>
+	<div>
+		<form th:action="@{/users/{userId}/accounts(userId=${user.userId})}" method="post">
+			<input type="hidden" name="userId" th:value="${user.userId}"/>
+			<input type="submit" value="Create New Bank Account"></input>
+		</form>
 	</div>
 
 
