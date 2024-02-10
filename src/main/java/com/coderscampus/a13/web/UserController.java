@@ -72,10 +72,13 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	// UPON CLICKING CREATE NEW BANK ACCOUNT
+	// UPON CLICKING CREATE NEW BANK ACCOUNT ----> Start off next time with a debug point
 	@PostMapping("/users/{userId}/accounts")
 	public String createAccount(@PathVariable Long userId) {
+		User user = userService.findById(userId);
 		Account account = new Account();
+		account.getUsers().add(user);
+		user.getAccounts().add(account);
 		accountService.saveAccount(account);
 		Long accountId = account.getAccountId();
 		return "redirect:/users/" + userId + "/accounts/" + accountId;
