@@ -31,5 +31,14 @@ public class AccountService {
 	public void delete(Long accountId) {
 		accountRepo.deleteById(accountId);
 	}
+	
+	public Integer findAccountIndex(List<Account> accounts, Long accountId) {
+		for(int i = 0; i < accounts.size(); i++) {
+			if(accounts.get(i).getAccountId().equals(accountId)){
+				return i + 1;
+			}
+		}
+		return 0;
+	}
 
 }

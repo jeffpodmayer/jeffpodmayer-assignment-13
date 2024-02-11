@@ -72,7 +72,8 @@ public class UserController {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
-	// UPON CLICKING CREATE NEW BANK ACCOUNT ----> Start off next time with a debug point
+
+	// UPON CLICKING CREATE NEW BANK ACCOUNT --> move to account controller
 	@PostMapping("/users/{userId}/accounts")
 	public String createAccount(@PathVariable Long userId) {
 		User user = userService.findById(userId);
@@ -80,18 +81,27 @@ public class UserController {
 		account.getUsers().add(user);
 		user.getAccounts().add(account);
 		accountService.saveAccount(account);
+		System.out.println(user);
 		Long accountId = account.getAccountId();
 		return "redirect:/users/" + userId + "/accounts/" + accountId;
 	}
 
-//	// Mapping for /ACCOUNT
-//	@GetMapping("/users/{userId}/accounts/{accountId}")
-//	public String createAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
-//		User user = userService.findById(userId);
-//		Account account = new Account();
-//		accountId = accountService.findById(accountId);
-//		model.put("user", user);
-//		model.put("account", account);
-//		return "accounts";
-//	}
+	// Mapping for /ACCOUNT --> move to account controller
+	@GetMapping("/users/{userId}/accounts/{accountId}")
+	public String updateAccount(ModelMap model, @PathVariable Long userId, @PathVariable Long accountId) {
+		User user = userService.findById(userId);
+		Integer accountIndex = accountService.findAccountIndex(user.getAccounts(), accountId);
+		Account account = accountService.findById(accountId);
+		model.put("user", user);
+		model.put("account", account);
+		model.put("accountIndex", accountIndex);
+		return "accounts";
+	}
+
+	@PostMapping("/users/{userId}/accounts/{accountId}")
+	public String updateAccountName(@PathVariable Long userId, @PathVariable Long accountId, Account account) {
+		accountService.saveAccount(account);
+		return "redirect:/users/" + userId + "/accounts/" + accountId;
+	}
+
 }
