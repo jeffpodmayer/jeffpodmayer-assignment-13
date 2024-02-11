@@ -65,10 +65,14 @@ public class UserController {
 	@PostMapping("/users/{userId}")
 	public String updateUser(@ModelAttribute("user") User updatedUser, Address address) {
 		User existingUser = userService.findById(updatedUser.getUserId());
+		
+		//Extract into userService method
 		existingUser.setName(updatedUser.getName());
 		existingUser.setUsername(updatedUser.getUsername());
 		existingUser.setPassword(updatedUser.getPassword());
 		existingUser.setAddress(address);
+		
+		//Extract into userService method
 		existingUser.getAccounts().addAll(updatedUser.getAccounts());
 		userService.saveUser(existingUser);
 		return "redirect:/users/" + existingUser.getUserId();
@@ -84,13 +88,18 @@ public class UserController {
 	// UPON CLICKING CREATE NEW BANK ACCOUNT --> move to account controller
 	@PostMapping("/users/{userId}/accounts")
 	public String createAccount(@PathVariable Long userId, @ModelAttribute("account") Account account) {
+		
+		//Extract into accountService method
 		User user = userService.findById(userId);
 		account.getUsers().add(user);
 		user.getAccounts().add(account);
 		accountService.saveAccount(account);
+		
+		//Extract into accountService method
 		Integer accountIndex = accountService.findAccountIndex(user.getAccounts(), account.getAccountId());
 		account.setAccountName("Account # " + accountIndex);
 		accountService.saveAccount(account);
+		
 		return "redirect:/users/" + userId + "/accounts/" + account.getAccountId();
 	}
 
@@ -105,7 +114,7 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}/accounts/{accountId}") // --> move to account controller
-	public String updateAccountName(@PathVariable Long userId, @PathVariable Long accountId, Account account) {
+	public String updateAccount(@PathVariable Long userId, @PathVariable Long accountId, Account account) {
 		accountService.saveAccount(account);
 		return "redirect:/users/" + userId + "/accounts/" + accountId;
 	}
