@@ -7,19 +7,20 @@
 
 <body>
 	<div th:if="${user != null}">
-		<h1 th:if="${account.accountName == null}" th:text="${'Account # ' + accountIndex}"></h1>
-		<h1 th:if="${account.accountName != null}" th:text="${account.accountName}"></h1>
+		<h1 th:text="${account.accountName}"></h1>
 
 	</div>
 
 
 	<form action="" method="post">
 		<div>
-			Bank Account Name: <input type="text" th:field= "${account.accountName}"/>
+			Bank Account Name:
+			 <input type="text" th:field= "${account.accountName}" th:value="${account.accountName}"/>
 		</div>
 		<div>
 			<input type="submit" value="Update Bank Account Name" />
 		</div>
+		<div><a th:href="@{/users/{userId}(userId=${user.userId})}">Back</a></div>
 	</form>
 </body>
 
