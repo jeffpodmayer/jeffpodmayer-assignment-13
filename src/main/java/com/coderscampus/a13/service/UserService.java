@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.coderscampus.a13.domain.Address;
 import com.coderscampus.a13.domain.User;
 import com.coderscampus.a13.repository.UserRepository;
 
@@ -31,5 +32,16 @@ public class UserService {
 	public void delete(Long userId) {
 		userRepo.deleteById(userId);
 	}
-
+	public void updateUserInfo(User updatedUser, Address address, User existingUser) {
+		existingUser.setName(updatedUser.getName());
+		existingUser.setUsername(updatedUser.getUsername());
+		existingUser.setPassword(updatedUser.getPassword());
+		existingUser.setAddress(address);
+		existingUser.getAccounts().addAll(updatedUser.getAccounts());
+	}
+	
+	public void enterUserInfo(User user, Address address) {
+		address.setUser(user);
+		user.setAddress(address);
+	}
 }

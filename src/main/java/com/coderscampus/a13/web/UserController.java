@@ -25,7 +25,6 @@ public class UserController {
 	@Autowired
 	private AccountService accountService;
 
-	// Mapping for /USERS page
 	@GetMapping("/users")
 	public String getAllUsers(ModelMap model) {
 		List<User> users = userService.findAll();
@@ -33,23 +32,20 @@ public class UserController {
 		return "users";
 	}
 
-	// Mapping for /REGISTER page
 	@GetMapping("/register")
-	public String createUser(ModelMap model) {
+	public String enterNewUser(ModelMap model) {
 		model.put("user", new User());
 		model.put("address", new Address());
 		return "register";
 	}
 
 	@PostMapping("/register")
-	public String submitNewUser(User user, Address address) {
-		address.setUser(user);
-		user.setAddress(address);
+	public String createNewUser(User user, Address address) {
+		userService.enterUserInfo(user, address);
 		userService.saveUser(user);
 		return "redirect:/users";
 	}
 
-	// Mapping for /USERID
 	@GetMapping("/users/{userId}")
 	public String viewUserByUserId(ModelMap model, @PathVariable Long userId) {
 		User user = userService.findById(userId);
@@ -61,30 +57,23 @@ public class UserController {
 		return "update";
 	}
 
-	// UPDATE for USER
 	@PostMapping("/users/{userId}")
-	public String updateUser(@ModelAttribute("user") User updatedUser, Address address) {
+	public String updateUserInfo(@ModelAttribute("user") User updatedUser, Address address) {
 		User existingUser = userService.findById(updatedUser.getUserId());
-		
-		//Extract into userService method
-		existingUser.setName(updatedUser.getName());
-		existingUser.setUsername(updatedUser.getUsername());
-		existingUser.setPassword(updatedUser.getPassword());
-		existingUser.setAddress(address);
-		
-		//Extract into userService method
-		existingUser.getAccounts().addAll(updatedUser.getAccounts());
+		userService.updateUserInfo(updatedUser, address, existingUser);
 		userService.saveUser(existingUser);
 		return "redirect:/users/" + existingUser.getUserId();
 	}
 
-	// DELETE for USER
 	@PostMapping("/users/{userId}/delete")
 	public String deleteUser(@PathVariable Long userId) {
 		userService.delete(userId);
 		return "redirect:/users";
 	}
 
+	
+	
+	
 	// UPON CLICKING CREATE NEW BANK ACCOUNT --> move to account controller
 	@PostMapping("/users/{userId}/accounts")
 	public String createAccount(@PathVariable Long userId, @ModelAttribute("account") Account account) {
