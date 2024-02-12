@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.coderscampus.a13.domain.Account;
+import com.coderscampus.a13.domain.User;
 import com.coderscampus.a13.repository.AccountRepository;
 
 @Service
@@ -40,5 +41,18 @@ public class AccountService {
 		}
 		return 0;
 	}
+	
+	public void nameNewBankAccount(Account account, User user) {
+		Integer accountIndex = findAccountIndex(user.getAccounts(), account.getAccountId());
+		account.setAccountName("Account # " + accountIndex);
+		saveAccount(account);
+	}
+
+	public void createAndSaveNewBankAccount(Account account, User user) {
+		account.getUsers().add(user);
+		user.getAccounts().add(account);
+		saveAccount(account);
+	}
+
 
 }

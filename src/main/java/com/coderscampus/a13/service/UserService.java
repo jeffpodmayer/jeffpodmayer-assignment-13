@@ -40,8 +40,9 @@ public class UserService {
 		existingUser.getAccounts().addAll(updatedUser.getAccounts());
 	}
 	
-	public void enterUserInfo(User user, Address address) {
+	public void createUser(User user, Address address) {
 		address.setUser(user);
 		user.setAddress(address);
+		saveUser(user);
 	}
 }
