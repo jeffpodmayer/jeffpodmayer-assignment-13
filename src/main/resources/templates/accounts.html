@@ -10,12 +10,10 @@
 		<h1 th:text="${account.accountName}"></h1>
 
 	</div>
-
-
 	<form action="" method="post">
 		<div>
 			Bank Account Name:
-			 <input type="text" th:field= "${account.accountName}" th:value="${account.accountName}"/>
+			<input type="text" th:field="${account.accountName}" th:value="${account.accountName}" />
 		</div>
 		<div>
 			<input type="submit" value="Update Bank Account Name" />

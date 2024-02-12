@@ -6,6 +6,7 @@
 </head>
 
 <body>
+
 	<h1>All Existing Users</h1>
 
 	<a href="/register">
@@ -21,7 +22,8 @@
 			<a th:text="${account.accountName}"
 				th:href="@{/users/{userId}/accounts/{accountId}(userId=${user.userId}, accountId=${account.accountId})}"></a>
 		</div>
-		<hr/>
+		<hr />
+	</div>
 </body>
 
 </html>
