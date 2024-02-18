@@ -20,6 +20,7 @@ import jakarta.persistence.Table;
 public class User {
 	private String username;
 	private String password;
+	private String newPassword;
 	private String name;
 	private Long userId;
 	List<Account> accounts = new ArrayList<>();
@@ -84,6 +85,14 @@ public class User {
 	public String toString() {
 		return "User [username=" + username + ", password=" + password + ", name=" + name + ", userId=" + userId
 				+ ", accounts=" + accounts + ", address=" + address + "]";
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
 	}
 
 	

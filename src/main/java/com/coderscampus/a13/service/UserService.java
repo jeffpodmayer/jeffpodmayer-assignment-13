@@ -35,9 +35,14 @@ public class UserService {
 	public void updateUserInfo(User updatedUser, Address address, User existingUser) {
 		existingUser.setName(updatedUser.getName());
 		existingUser.setUsername(updatedUser.getUsername());
-		existingUser.setPassword(updatedUser.getPassword());
 		existingUser.setAddress(address);
 		existingUser.getAccounts().addAll(updatedUser.getAccounts());
+	}
+	
+	public void setNewPasswordIfExists(String newPassword, User existingUser) {
+		if (newPassword != null && !newPassword.isEmpty()) {
+			 existingUser.setPassword(newPassword);
+		 }
 	}
 	
 	public void createUser(User user, Address address) {

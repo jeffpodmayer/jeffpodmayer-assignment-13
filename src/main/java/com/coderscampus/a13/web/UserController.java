@@ -53,12 +53,14 @@ public class UserController {
 	}
 
 	@PostMapping("/users/{userId}")
-	public String updateUserInfo(@ModelAttribute("user") User updatedUser, Address address) {
+	public String updateUserInfo(@ModelAttribute("user") User updatedUser, Address address, String newPassword) {
 		User existingUser = userService.findById(updatedUser.getUserId());
 		userService.updateUserInfo(updatedUser, address, existingUser);
+		userService.setNewPasswordIfExists(newPassword, existingUser);
 		userService.saveUser(existingUser);
 		return "redirect:/users/" + existingUser.getUserId();
 	}
+
 
 	@PostMapping("/users/{userId}/delete")
 	public String deleteUser(@PathVariable Long userId) {
